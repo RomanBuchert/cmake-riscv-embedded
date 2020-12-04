@@ -44,7 +44,7 @@ endif (NOT DEFINED TOOLCHAIN)
 message("\nSearching for ${TOOLCHAIN}-gcc${TOOLCHAIN_EXT}")
 find_path(TOOLCHAIN_PATH ${TOOLCHAIN}-gcc${TOOLCHAIN_EXT})
 if ("${TOOLCHAIN_PATH}" STREQUAL "TOOLCHAIN_PATH-NOTFOUND")
-	message("No Toolchain found")
+	message("No Toolchain found: ${TOOLCHAIN_PATH}")
 else ()
 	message("Toolchain found in ${TOOLCHAIN_PATH}")
 	get_filename_component(TOOLCHAIN_PREFIX ${TOOLCHAIN_PATH} DIRECTORY)
@@ -76,6 +76,17 @@ message("Toolchain library dir is: ${TOOLCHAIN_LIB_DIR}")
 message("-----------------------------------------------------------------------------------------------------------------------------------------------------")
 # Perform compiler test with static library
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
+#---------------------------------------------------------------------------------------
+# Find Linker script
+#---------------------------------------------------------------------------------------
+if (DEFINED LINKER_SCRIPT_NAME)
+	file(GLOB_RECURSE LINKER_SCRIPT
+		${CMAKE_CURRENT_SOURCE_DIR}
+		${LINKER_SCRIPT_NAME}
+		CONFIGURE_DEPENDS
+	)
+endif()
 
 #---------------------------------------------------------------------------------------
 # Set compiler/linker flags
@@ -123,6 +134,9 @@ message("-----------------------------------------------------------------------
 # --specs=nano.specs    Link with newlib-nano.
 # --specs=nosys.specs   No syscalls, provide empty implementations for the POSIX system calls.
 set(CMAKE_EXE_LINKER_FLAGS "-Wl,--gc-sections --specs=nano.specs --specs=nosys.specs -march=${RISCV_ARCH} -mabi=${RISCV_ABI} -Wl,-Map=${CMAKE_PROJECT_NAME}.map" CACHE INTERNAL "Linker options")
+if (DEFINED LINKER_SCRIPT)
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${LINKER_SCRIPT}")
+endif()
 message("Linker flags")
 message("Linker options:       ${CMAKE_EXE_LINKER_FLAGS}")
 message("-----------------------------------------------------------------------------------------------------------------------------------------------------")
