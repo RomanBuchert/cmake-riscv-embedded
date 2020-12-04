@@ -50,7 +50,7 @@ __ILM_RAM_SIZE = 0x00010000;
  * </h>
 */
 __RAM_BASE = @RAM_START@;
-__RAM_SIZE = @RAM_SIZE;
+__RAM_SIZE = @RAM_SIZE@;
 
 /********************* Stack / Heap Configuration ****************************
  * <h> Stack / Heap Configuration
