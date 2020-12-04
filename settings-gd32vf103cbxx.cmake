@@ -38,5 +38,5 @@ get_property(RAM_SIZE
 
 configure_file(
 	"${CMAKE_CURRENT_LIST_DIR}/linkerscripts/gcc_gd32vf103.ld.in"
-	"${CMAKE_CURRENT_BUILD_DIR}/gcc_link.ld"
+	"${CMAKE_CURRENT_BINARY_DIR}/gcc_link.ld"
 )
