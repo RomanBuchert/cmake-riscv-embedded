@@ -13,8 +13,8 @@ include("${CMAKE_CURRENT_LIST_DIR}/settings-gd32vf103-family.cmake")
 set_property(GLOBAL APPEND_STRING PROPERTY PROP_SOC_NAME "cb")
 
 # Memory settings
-set_property(GLOBAL PROPERTY PROP_FLASH_SIZE 128k)
-set_property(GLOBAL PROPERTY PROP_RAM_SIZE 32k)
+set_property(GLOBAL PROPERTY PROP_FLASH_SIZE 64k)
+set_property(GLOBAL PROPERTY PROP_RAM_SIZE 20k)
 
 get_property(FLASH_START
 	GLOBAL
